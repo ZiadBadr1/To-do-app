@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
+use App\Mail\TestMail;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,5 +37,12 @@ Route::resource('tasks',TaskController::class );
 Route::get('tasks/delete/{id}',[TaskController::class,"delete"])->name("tasks.delete");
 Route::get('tasks/showDeletedTask',[TaskController::class,"showDeletedTask"])->name("tasks.showDeletedTask");
 Route::get('tasks/restore/{id}',[TaskController::class,"restore"])->name("tasks.restore");
+
+
+Route::get('/send',function ()
+{
+   Mail::to("ziadmahmoud5947@gmail.com")->send(new TestMail());
+   return response("Sending Done");
+});
 
 require __DIR__.'/auth.php';
