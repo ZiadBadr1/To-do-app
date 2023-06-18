@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EventTask;
 use App\Http\Requests\storeTaskRequest;
 use App\Models\Task;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,6 +58,8 @@ class TaskController extends Controller
         $task->comment = $request->comment;
         $task->user_id = $request->user_id ;
         $task->save();
+        event(new EventTask(Auth::user(),$task));
+
 //        return response("added");
 
         // second method
